@@ -9,7 +9,7 @@ import Foundation
 
 struct Constants {
     
-    static let APIEndPoint = "https://api.spaceflightnewsapi.net/v3/articles?_limit=5"
+    static let APIEndPoint = "https://api.spaceflightnewsapi.net/v3/articles?_limit=10"
     
     
     
