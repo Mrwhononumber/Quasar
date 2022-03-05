@@ -52,6 +52,7 @@ class HomeViewController: UIViewController {
                     self.feedTableView.reloadData()
                 }
             case .failure(let error):
+                self.showOneButtonAlert(title: "Sorry", action: "Retry", message: error.rawValue)
                 print(error)
             }
         }
