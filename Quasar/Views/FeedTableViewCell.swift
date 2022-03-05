@@ -27,8 +27,10 @@ class FeedTableViewCell: UITableViewCell {
         
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.clipsToBounds = true
+//        title.clipsToBounds = true
         title.numberOfLines = 0
+        title.font = .boldSystemFont(ofSize: 35)
+        title.textColor = .white
         return title
     }()
     
@@ -37,11 +39,26 @@ class FeedTableViewCell: UITableViewCell {
         let source = UILabel()
         source.translatesAutoresizingMaskIntoConstraints = false
         source.numberOfLines = 1
+         source.textColor = .systemYellow
+         source.font = .systemFont(ofSize: 15)
         return source
     }()
     
+    private let activityIndicatorView: UIActivityIndicatorView = {
+        let myView = UIActivityIndicatorView()
+        myView.hidesWhenStopped = true
+        myView.style = .medium
+        myView.color = .systemPink
+        myView.startAnimating()
+        return myView
+    }()
     
-    
+    private let blackView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0.5
+        return view
+    }()
     
     //MARK: - Init
     
@@ -53,6 +70,8 @@ class FeedTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        activityIndicatorView.center = contentView.center
+        blackView.frame = bounds
 //        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
     }
     
@@ -64,27 +83,25 @@ class FeedTableViewCell: UITableViewCell {
     
     func configureUI(){
         contentView.addSubview(articleImage)
+        contentView.addSubview(articleSource)
+        articleImage.addSubview(blackView)
         contentView.addSubview(articleTitle)
+        articleImage.addSubview(activityIndicatorView)
     }
     
     func configureCell(with article:Article){
         
         articleTitle.text = article.title
         articleSource.text = article.newsSite
-        articleImage.image = fetchImage(with: article.imageUrl)
-    }
-    
-    func fetchImage(with url:String) -> UIImage {
-        var image = UIImage()
-        NetworkManager.shared.fetchArticleImage(url: url) { results in
+        NetworkManager.shared.fetchArticleImage(url: article.imageUrl) { results in
             switch results {
             case .success(let fetchedImage):
-               image = fetchedImage
+                self.articleImage.image = fetchedImage
+                self.activityIndicatorView.stopAnimating()
             case .failure(let error):
                 print("imagedownloading error \(error)")
             }
-    }
-        return image
+        }
     }
     
     func setConstraints(){
@@ -97,22 +114,22 @@ class FeedTableViewCell: UITableViewCell {
         ]
         
         let artticleTitleConstraints = [
-            articleTitle.leadingAnchor.constraint(equalTo: articleImage.leadingAnchor, constant: 5),
-            articleTitle.trailingAnchor.constraint(equalTo: articleImage.trailingAnchor, constant: -20),
-            articleTitle.topAnchor.constraint(equalTo: articleImage.topAnchor, constant: 5),
+            articleTitle.leadingAnchor.constraint(equalTo: articleImage.leadingAnchor, constant: 15),
+            articleTitle.trailingAnchor.constraint(equalTo: articleImage.trailingAnchor, constant: -contentView.frame.width/3),
+            articleTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             articleTitle.bottomAnchor.constraint(equalTo: articleImage.bottomAnchor, constant: -5)
         ]
         
-//        let articleSourceConstraints = [
-//            articleSource.leadingAnchor.constraint(equalTo: articleImage.leadingAnchor, constant: 5),
-//            articleSource.trailingAnchor.constraint(equalTo: articleImage.trailingAnchor, constant: -20),
-//            articleSource.bottomAnchor.constraint(equalTo: articleImage.bottomAnchor, constant: -5)
-//
-//        ]
+        let articleSourceConstraints = [
+          
+            articleSource.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            articleSource.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+
+        ]
         
         NSLayoutConstraint.activate(articleImageConstraints)
         NSLayoutConstraint.activate(artticleTitleConstraints)
-//        NSLayoutConstraint.activate(articleSourceConstraints)
+        NSLayoutConstraint.activate(articleSourceConstraints)
     }
     
     
