@@ -9,9 +9,5 @@ import Foundation
 
 struct Constants {
     
-    static let APIEndPoint = "https://api.spaceflightnewsapi.net/v3/articles?_limit=10"
-    
-    
-    
-    
+    static let APIEndPoint = "https://api.spaceflightnewsapi.net/v3/articles?_limit=15&_start="
 }

@@ -11,21 +11,24 @@ class HomeViewController: UIViewController {
     
     //MARK: - Properties
     
-    var articles = [Article]()
+    private var articles = [Article]()
     
-    let feedTableView: UITableView = {
+    private var pageNumber = 1
+    private var isFetchingMoreArticles = false
+    
+    private let feedTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.idintifier)
         tableView.separatorStyle = .none
         return tableView
     }()
     
-//MARK: - VC LifeCycle
+    //MARK: - VC LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        configureFeedTableView()
+        setupFeedTableView()
         fetchArticles()
     }
     
@@ -36,15 +39,15 @@ class HomeViewController: UIViewController {
     
     //MARK: - Helper Functions
     
-    func configureUI(){
-        title = "Your Feed"
+    private func configureUI(){
+        title = "Quasar Feed"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         view.addSubview(feedTableView)
     }
     
-    func fetchArticles(){
-        NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint) { results in
+    private func fetchArticles(){
+        NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { results in
             switch results {
             case .success(let fetchedArticles):
                 self.articles = fetchedArticles
@@ -57,13 +60,33 @@ class HomeViewController: UIViewController {
             }
         }
     }
+    
+    private func fetchMoreArticles(){
+        pageNumber += 16
+        print("page number is : \(pageNumber)")
+        isFetchingMoreArticles = true
+        NetworkManager.shared.fetchArticleData(
+            with: Constants.APIEndPoint+String(pageNumber)) { results in
+                switch results {
+                case .success(let newArticles):
+                    self.articles.append(contentsOf: newArticles)
+                    self.isFetchingMoreArticles = false
+                    DispatchQueue.main.async {
+                        self.feedTableView.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
+                    return
+                }
+            }
+    }
 }
 
 //MARK: - Feed TableView
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func configureFeedTableView(){
+   private func setupFeedTableView(){
         
         feedTableView.delegate = self
         feedTableView.dataSource = self
@@ -88,9 +111,24 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         return 400
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            let selectedArticle = self.articles[indexPath.section]
+            let detailVC = ArticleDetailViewController()
+            detailVC.configure(with: selectedArticle.url)
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
     
-    
-    
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if offsetY > contentHeight - scrollView.frame.height {
+            if !isFetchingMoreArticles {
+                fetchMoreArticles()
+            }
+        }
+    }
 }
 

@@ -27,7 +27,7 @@ class FeedTableViewCell: UITableViewCell {
         
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-//        title.clipsToBounds = true
+        title.clipsToBounds = true
         title.numberOfLines = 0
         title.font = .boldSystemFont(ofSize: 35)
         title.textColor = .white
@@ -40,7 +40,7 @@ class FeedTableViewCell: UITableViewCell {
         source.translatesAutoresizingMaskIntoConstraints = false
         source.numberOfLines = 1
          source.textColor = .systemYellow
-         source.font = .systemFont(ofSize: 15)
+         source.font = .boldSystemFont(ofSize: 14)
         return source
     }()
     
@@ -72,7 +72,6 @@ class FeedTableViewCell: UITableViewCell {
         super.layoutSubviews()
         activityIndicatorView.center = contentView.center
         blackView.frame = bounds
-//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
     }
     
     required init?(coder: NSCoder) {
@@ -99,6 +98,7 @@ class FeedTableViewCell: UITableViewCell {
                 self.articleImage.image = fetchedImage
                 self.activityIndicatorView.stopAnimating()
             case .failure(let error):
+                self.articleImage.image = UIImage(named: "test")
                 print("imagedownloading error \(error)")
             }
         }
