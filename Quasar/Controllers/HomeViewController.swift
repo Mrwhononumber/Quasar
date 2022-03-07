@@ -12,7 +12,6 @@ class HomeViewController: UIViewController {
     //MARK: - Properties
     
     private var articles = [Article]()
-    
     private var pageNumber = 1
     private var isFetchingMoreArticles = false
     
@@ -20,6 +19,7 @@ class HomeViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.idintifier)
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -55,30 +55,30 @@ class HomeViewController: UIViewController {
                     self.feedTableView.reloadData()
                 }
             case .failure(let error):
-                self.showOneButtonAlert(title: "Sorry", action: "Retry", message: error.rawValue)
+                self.showOneButtonAlert(title: "Sorry", action: "Ok", message: error.rawValue)
                 print(error)
             }
         }
     }
     
     private func fetchMoreArticles(){
-        pageNumber += 16
-        print("page number is : \(pageNumber)")
+        
+        pageNumber += 11
         isFetchingMoreArticles = true
-        NetworkManager.shared.fetchArticleData(
-            with: Constants.APIEndPoint+String(pageNumber)) { results in
-                switch results {
-                case .success(let newArticles):
-                    self.articles.append(contentsOf: newArticles)
-                    self.isFetchingMoreArticles = false
-                    DispatchQueue.main.async {
-                        self.feedTableView.reloadData()
-                    }
-                case .failure(let error):
-                    print(error)
-                    return
+        NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { results in
+            switch results {
+            case .success(let newArticles):
+                self.articles.append(contentsOf: newArticles)
+                self.isFetchingMoreArticles = false
+                DispatchQueue.main.async {
+                    self.feedTableView.reloadData()
                 }
+                
+            case .failure(let error):
+                print(error)
+                return
             }
+        }
     }
 }
 
@@ -86,7 +86,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
-   private func setupFeedTableView(){
+    private func setupFeedTableView(){
         
         feedTableView.delegate = self
         feedTableView.dataSource = self
@@ -101,6 +101,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = feedTableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.idintifier, for: indexPath) as! FeedTableViewCell
         let selectedArticle = articles[indexPath.section]
         cell.configureCell(with: selectedArticle)
@@ -124,7 +125,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
-        if offsetY > contentHeight - scrollView.frame.height {
+        if offsetY > contentHeight - scrollView.frame.height  {
             if !isFetchingMoreArticles {
                 fetchMoreArticles()
             }

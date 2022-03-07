@@ -22,7 +22,7 @@ class ArticleDetailViewController: UIViewController {
         let myView = UIActivityIndicatorView()
         myView.hidesWhenStopped = true
         myView.style = .medium
-        myView.color = .systemPink
+        myView.color = .systemGray
         myView.startAnimating()
         return myView
     }()

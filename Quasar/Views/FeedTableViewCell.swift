@@ -48,7 +48,7 @@ class FeedTableViewCell: UITableViewCell {
         let myView = UIActivityIndicatorView()
         myView.hidesWhenStopped = true
         myView.style = .medium
-        myView.color = .systemPink
+        myView.color = .gray
         myView.startAnimating()
         return myView
     }()
@@ -81,11 +81,11 @@ class FeedTableViewCell: UITableViewCell {
     //MARK: - Helper Functions
     
     func configureUI(){
+        contentView.addSubview(activityIndicatorView)
         contentView.addSubview(articleImage)
         contentView.addSubview(articleSource)
         articleImage.addSubview(blackView)
-        contentView.addSubview(articleTitle)
-        articleImage.addSubview(activityIndicatorView)
+        articleImage.addSubview(articleTitle)
     }
     
     func configureCell(with article:Article){
@@ -95,7 +95,9 @@ class FeedTableViewCell: UITableViewCell {
         NetworkManager.shared.fetchArticleImage(url: article.imageUrl) { results in
             switch results {
             case .success(let fetchedImage):
+                self.articleImage.alpha = 0
                 self.articleImage.image = fetchedImage
+                self.animateImageToFadeIn(source: self.articleImage, duration: 0.3)
                 self.activityIndicatorView.stopAnimating()
             case .failure(let error):
                 self.articleImage.image = UIImage(named: "test")
@@ -124,7 +126,6 @@ class FeedTableViewCell: UITableViewCell {
           
             articleSource.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             articleSource.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-
         ]
         
         NSLayoutConstraint.activate(articleImageConstraints)
@@ -132,8 +133,10 @@ class FeedTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(articleSourceConstraints)
     }
     
-    
-    
-    
+    private func animateImageToFadeIn(source: UIView, duration: TimeInterval){
+         UIView.animate(withDuration: duration) {
+             self.articleImage.alpha = 1
+         }
+     }
 }
 

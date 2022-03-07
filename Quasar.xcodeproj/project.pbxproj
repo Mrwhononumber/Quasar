@@ -12,6 +12,9 @@
 		664029D727D36963009BF0B1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029D627D36963009BF0B1 /* Constants.swift */; };
 		664029D927D36A6F009BF0B1 /* QuasarError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029D827D36A6F009BF0B1 /* QuasarError.swift */; };
 		664029DB27D36B76009BF0B1 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029DA27D36B76009BF0B1 /* Article.swift */; };
+		664029DD27D3946F009BF0B1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029DC27D3946F009BF0B1 /* Extensions.swift */; };
+		664029DF27D49991009BF0B1 /* ArticleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029DE27D49991009BF0B1 /* ArticleDetailViewController.swift */; };
+		664029E127D4DBE5009BF0B1 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029E027D4DBE5009BF0B1 /* LoadingTableViewCell.swift */; };
 		66B9608927D32F1A0035890E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9608827D32F1A0035890E /* AppDelegate.swift */; };
 		66B9608B27D32F1A0035890E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9608A27D32F1A0035890E /* SceneDelegate.swift */; };
 		66B9608D27D32F1A0035890E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9608C27D32F1A0035890E /* HomeViewController.swift */; };
@@ -26,6 +29,9 @@
 		664029D627D36963009BF0B1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		664029D827D36A6F009BF0B1 /* QuasarError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuasarError.swift; sourceTree = "<group>"; };
 		664029DA27D36B76009BF0B1 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		664029DC27D3946F009BF0B1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		664029DE27D49991009BF0B1 /* ArticleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailViewController.swift; sourceTree = "<group>"; };
+		664029E027D4DBE5009BF0B1 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		66B9608527D32F1A0035890E /* Quasar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quasar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66B9608827D32F1A0035890E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66B9608A27D32F1A0035890E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				66B9608C27D32F1A0035890E /* HomeViewController.swift */,
+				664029DE27D49991009BF0B1 /* ArticleDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -59,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				664029D227D33F24009BF0B1 /* FeedTableViewCell.swift */,
+				664029E027D4DBE5009BF0B1 /* LoadingTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -75,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				664029D427D3692D009BF0B1 /* NetworkManager.swift */,
-				664029D827D36A6F009BF0B1 /* QuasarError.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -84,6 +91,8 @@
 			isa = PBXGroup;
 			children = (
 				664029D627D36963009BF0B1 /* Constants.swift */,
+				664029D827D36A6F009BF0B1 /* QuasarError.swift */,
+				664029DC27D3946F009BF0B1 /* Extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -194,10 +203,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				66B9608D27D32F1A0035890E /* HomeViewController.swift in Sources */,
+				664029DD27D3946F009BF0B1 /* Extensions.swift in Sources */,
 				664029D327D33F24009BF0B1 /* FeedTableViewCell.swift in Sources */,
 				664029D927D36A6F009BF0B1 /* QuasarError.swift in Sources */,
+				664029DF27D49991009BF0B1 /* ArticleDetailViewController.swift in Sources */,
 				664029D527D3692D009BF0B1 /* NetworkManager.swift in Sources */,
 				664029DB27D36B76009BF0B1 /* Article.swift in Sources */,
+				664029E127D4DBE5009BF0B1 /* LoadingTableViewCell.swift in Sources */,
 				66B9608927D32F1A0035890E /* AppDelegate.swift in Sources */,
 				66B9608B27D32F1A0035890E /* SceneDelegate.swift in Sources */,
 				664029D727D36963009BF0B1 /* Constants.swift in Sources */,
