@@ -5,7 +5,7 @@ Simple iOS application in Swift for browsing the latest space news and articles
 # Application Features
 
 
-* Easily view all the trending/Recent space news headlines and it's Images
+* Easily view all the trending/recent space news articles headlines and it's images
 
 * View the actual article on the publishing website
 
