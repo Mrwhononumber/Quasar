@@ -20,4 +20,22 @@ extension UIViewController {
     }
 }
 
+extension UICollectionViewCell {
+    func AddShadow() {
+        let radius: CGFloat = 10
+        contentView.layer.cornerRadius = radius
+        contentView.layer.borderWidth = 2
+        contentView.layer.borderColor = UIColor.clear.cgColor
+        contentView.layer.masksToBounds = true
+    
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        layer.shadowRadius = 5.0
+        layer.shadowOpacity = 0.5
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+        layer.cornerRadius = radius
+    }
+}
+
 

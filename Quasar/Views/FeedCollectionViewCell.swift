@@ -7,11 +7,11 @@
 
 import UIKit
 
-class FeedTableViewCell: UITableViewCell {
+class FeedCollectionViewCell: UICollectionViewCell {
 
   //MARK: - Properties
     
-    static let idintifier = "FeedTableViewCell"
+    static let idintifier = "FeedCollectionViewCell"
     
     private let articleImage: UIImageView = {
   
@@ -20,6 +20,7 @@ class FeedTableViewCell: UITableViewCell {
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.alpha = 1
+        image.layer.cornerRadius = 10
         return image
     }()
     
@@ -62,10 +63,11 @@ class FeedTableViewCell: UITableViewCell {
     
     //MARK: - Init
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureUI()
         setConstraints()
+    
     }
     
     override func layoutSubviews() {

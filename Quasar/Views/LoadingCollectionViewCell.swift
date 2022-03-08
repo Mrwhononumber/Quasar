@@ -7,13 +7,13 @@
 
 import UIKit
 
-class LoadingTableViewCell: UITableViewCell {
+class LoadingCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
       
-    static let idintifier = "LoadingTableViewCell"
+    static let idintifier = "LoadingCollectionViewCell"
 
-    private let activityIndicatorView: UIActivityIndicatorView = {
+     let activityIndicatorView: UIActivityIndicatorView = {
         let myView = UIActivityIndicatorView()
         myView.hidesWhenStopped = true
         myView.style = .medium
@@ -24,8 +24,8 @@ class LoadingTableViewCell: UITableViewCell {
     
     //MARK: - Init
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureUI()
     }
     
