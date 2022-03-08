@@ -50,8 +50,8 @@ class HomeViewController: UIViewController {
         NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { results in
             switch results {
             case .success(let fetchedArticles):
-                self.articles = fetchedArticles
                 DispatchQueue.main.async {
+                    self.articles = fetchedArticles
                     self.feedTableView.reloadData()
                 }
             case .failure(let error):
@@ -68,9 +68,9 @@ class HomeViewController: UIViewController {
         NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { results in
             switch results {
             case .success(let newArticles):
-                self.articles.append(contentsOf: newArticles)
-                self.isFetchingMoreArticles = false
                 DispatchQueue.main.async {
+                    self.articles.append(contentsOf: newArticles)
+                    self.isFetchingMoreArticles = false
                     self.feedTableView.reloadData()
                 }
                 
@@ -125,7 +125,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
-        if offsetY > contentHeight - scrollView.frame.height  {
+        if offsetY > contentHeight - scrollView.frame.height {
             if !isFetchingMoreArticles {
                 fetchMoreArticles()
             }
