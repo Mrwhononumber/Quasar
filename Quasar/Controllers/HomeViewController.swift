@@ -15,12 +15,15 @@ class HomeViewController: UIViewController {
     private var pageNumber = 1
     private var isFetchingMoreArticles = false
     
-    private let feedTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.idintifier)
-        tableView.separatorStyle = .none
-        tableView.showsVerticalScrollIndicator = false
-        return tableView
+    private let feedcCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 40
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 36, height: 420)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.idintifier)
+        collectionView.register(LoadingCollectionViewCell.self, forCellWithReuseIdentifier: LoadingCollectionViewCell.idintifier)
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
     }()
     
     //MARK: - VC LifeCycle
@@ -28,13 +31,13 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        setupFeedTableView()
+        setupFeedCollectionView()
         fetchArticles()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        feedTableView.frame = view.bounds
+        feedcCollectionView.frame = view.bounds
     }
     
     //MARK: - Helper Functions
@@ -43,7 +46,7 @@ class HomeViewController: UIViewController {
         title = "Quasar Feed"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
-        view.addSubview(feedTableView)
+        view.addSubview(feedcCollectionView)
     }
     
     private func fetchArticles(){
@@ -52,7 +55,7 @@ class HomeViewController: UIViewController {
             case .success(let fetchedArticles):
                 DispatchQueue.main.async {
                     self?.articles = fetchedArticles
-                    self?.feedTableView.reloadData()
+                    self?.feedcCollectionView.reloadData()
                 }
             case .failure(let error):
                 self?.showOneButtonAlert(title: "Sorry", action: "Ok", message: error.rawValue)
@@ -65,13 +68,14 @@ class HomeViewController: UIViewController {
         
         pageNumber += 11
         isFetchingMoreArticles = true
+        feedcCollectionView.reloadSections(IndexSet(integer: 1))
         NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { [weak self] results in
             switch results {
             case .success(let newArticles):
                 DispatchQueue.main.async {
                     self?.articles.append(contentsOf: newArticles)
                     self?.isFetchingMoreArticles = false
-                    self?.feedTableView.reloadData()
+                    self?.feedcCollectionView.reloadData()
                 }
                 
             case .failure(let error):
@@ -84,35 +88,44 @@ class HomeViewController: UIViewController {
 
 //MARK: - Feed TableView
 
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    private func setupFeedTableView(){
+     func setupFeedCollectionView(){
         
-        feedTableView.delegate = self
-        feedTableView.dataSource = self
+        feedcCollectionView.delegate   = self
+        feedcCollectionView.dataSource = self
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return articles.count
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+ 
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+            return articles.count
+        } else if section == 1 {
+            return 1
+        }
+        return 0
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 0 {
+            let cell = feedcCollectionView.dequeueReusableCell(withReuseIdentifier: FeedCollectionViewCell.idintifier, for: indexPath) as! FeedCollectionViewCell
+            cell.AddShadow()
+            let selectedArticle = articles[indexPath.row]
+            cell.configureCell(with: selectedArticle)
+            return cell
+        } else {
+            let cell = feedcCollectionView.dequeueReusableCell(withReuseIdentifier: LoadingCollectionViewCell.idintifier, for: indexPath) as! LoadingCollectionViewCell
+            cell.activityIndicatorView.startAnimating()
+            return cell
+        }
         
-        let cell = feedTableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.idintifier, for: indexPath) as! FeedTableViewCell
-        let selectedArticle = articles[indexPath.section]
-        cell.configureCell(with: selectedArticle)
-        return cell
+       
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 400
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         DispatchQueue.main.async { [weak self] in
             guard let selectedArticle = self?.articles[indexPath.section] else {return}
             let detailVC = ArticleDetailViewController()
@@ -126,10 +139,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         let contentHeight = scrollView.contentSize.height
         
         if offsetY > contentHeight - scrollView.frame.height {
+            
             if !isFetchingMoreArticles {
                 fetchMoreArticles()
+                
             }
         }
     }
 }
-
