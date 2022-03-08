@@ -92,15 +92,15 @@ class FeedTableViewCell: UITableViewCell {
         
         articleTitle.text = article.title
         articleSource.text = article.newsSite
-        NetworkManager.shared.fetchArticleImage(url: article.imageUrl) { results in
+        NetworkManager.shared.fetchArticleImage(url: article.imageUrl) { [weak self] results in
             switch results {
             case .success(let fetchedImage):
-                self.articleImage.alpha = 0
-                self.articleImage.image = fetchedImage
-                self.animateImageToFadeIn(source: self.articleImage, duration: 0.3)
-                self.activityIndicatorView.stopAnimating()
+                self?.articleImage.alpha = 0
+                self?.articleImage.image = fetchedImage
+                self?.animateImageToFadeIn(source: self!.articleImage, duration: 0.3)
+                self?.activityIndicatorView.stopAnimating()
             case .failure(let error):
-                self.articleImage.image = UIImage(named: "test")
+                self?.articleImage.image = UIImage(named: "test")
                 print("imagedownloading error \(error)")
             }
         }
@@ -133,9 +133,10 @@ class FeedTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(articleSourceConstraints)
     }
     
-    private func animateImageToFadeIn(source: UIView, duration: TimeInterval){
-         UIView.animate(withDuration: duration) {
-             self.articleImage.alpha = 1
+    private func animateImageToFadeIn(source: UIView?, duration: TimeInterval){
+        guard source != nil else {return}
+         UIView.animate(withDuration: duration) { [weak self] in
+             self?.articleImage.alpha = 1
          }
      }
 }

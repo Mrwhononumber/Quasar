@@ -47,15 +47,15 @@ class HomeViewController: UIViewController {
     }
     
     private func fetchArticles(){
-        NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { results in
+        NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { [weak self] results in
             switch results {
             case .success(let fetchedArticles):
                 DispatchQueue.main.async {
-                    self.articles = fetchedArticles
-                    self.feedTableView.reloadData()
+                    self?.articles = fetchedArticles
+                    self?.feedTableView.reloadData()
                 }
             case .failure(let error):
-                self.showOneButtonAlert(title: "Sorry", action: "Ok", message: error.rawValue)
+                self?.showOneButtonAlert(title: "Sorry", action: "Ok", message: error.rawValue)
                 print(error)
             }
         }
@@ -65,13 +65,13 @@ class HomeViewController: UIViewController {
         
         pageNumber += 11
         isFetchingMoreArticles = true
-        NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { results in
+        NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { [weak self] results in
             switch results {
             case .success(let newArticles):
                 DispatchQueue.main.async {
-                    self.articles.append(contentsOf: newArticles)
-                    self.isFetchingMoreArticles = false
-                    self.feedTableView.reloadData()
+                    self?.articles.append(contentsOf: newArticles)
+                    self?.isFetchingMoreArticles = false
+                    self?.feedTableView.reloadData()
                 }
                 
             case .failure(let error):
@@ -113,11 +113,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        DispatchQueue.main.async {
-            let selectedArticle = self.articles[indexPath.section]
+        DispatchQueue.main.async { [weak self] in
+            guard let selectedArticle = self?.articles[indexPath.section] else {return}
             let detailVC = ArticleDetailViewController()
             detailVC.configure(with: selectedArticle.url)
-            self.navigationController?.pushViewController(detailVC, animated: true)
+            self?.navigationController?.pushViewController(detailVC, animated: true)
         }
     }
     
