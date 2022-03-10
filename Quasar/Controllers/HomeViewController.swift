@@ -58,7 +58,7 @@ class HomeViewController: UIViewController {
                     self?.feedcCollectionView.reloadData()
                 }
             case .failure(let error):
-                self?.showOneButtonAlert(title: "Sorry", action: "Ok", message: error.rawValue)
+                self?.showOneButtonAlert(title: "Oops!", action: "Ok", message: error.rawValue)
                 print(error)
             }
         }
@@ -91,7 +91,6 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
      func setupFeedCollectionView(){
-        
         feedcCollectionView.delegate   = self
         feedcCollectionView.dataSource = self
     }
@@ -121,8 +120,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.activityIndicatorView.startAnimating()
             return cell
         }
-        
-       
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -139,10 +136,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let contentHeight = scrollView.contentSize.height
         
         if offsetY > contentHeight - scrollView.frame.height {
-            
             if !isFetchingMoreArticles {
                 fetchMoreArticles()
-                
             }
         }
     }

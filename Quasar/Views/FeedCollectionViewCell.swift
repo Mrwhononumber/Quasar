@@ -80,6 +80,10 @@ class FeedCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        articleImage.image = nil
+    }
+    
     //MARK: - Helper Functions
     
     func configureUI(){
@@ -99,10 +103,10 @@ class FeedCollectionViewCell: UICollectionViewCell {
             case .success(let fetchedImage):
                 self?.articleImage.alpha = 0
                 self?.articleImage.image = fetchedImage
-                self?.animateImageToFadeIn(source: self!.articleImage, duration: 0.3)
+                self?.animateImageToFadeIn(source: self!.articleImage, duration: 0.9)
                 self?.activityIndicatorView.stopAnimating()
             case .failure(let error):
-                self?.articleImage.image = UIImage(named: "test")
+                self?.articleImage.image = UIImage(named: "PlaceHolder")
                 print("imagedownloading error \(error)")
             }
         }

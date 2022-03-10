@@ -13,7 +13,6 @@ class ArticleDetailViewController: UIViewController {
     //MARK: - Properties
     
     private let webView: WKWebView = {
-        
         let view = WKWebView()
        return view
     }()

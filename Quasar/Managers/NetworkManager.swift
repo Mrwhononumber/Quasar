@@ -11,7 +11,7 @@ import UIKit
 class NetworkManager {
     
     static let shared = NetworkManager()
-    
+
     private var cache = NSCache <NSString, UIImage>()
     
     func fetchArticleData (with url: String, completion: @ escaping (Result<[Article], QuasarError>) -> Void) {
@@ -53,7 +53,6 @@ class NetworkManager {
         }
         task.resume()
     }
-    
     
     func fetchArticleImage(url: String, completion: @escaping (Result<UIImage, QuasarError>) -> Void ){
         
