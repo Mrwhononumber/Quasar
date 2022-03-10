@@ -18,7 +18,6 @@ class HomeViewController: UIViewController {
     private let feedcCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 40
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 36, height: 420)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.idintifier)
         collectionView.register(LoadingCollectionViewCell.self, forCellWithReuseIdentifier: LoadingCollectionViewCell.idintifier)
@@ -88,16 +87,27 @@ class HomeViewController: UIViewController {
 
 //MARK: - Feed TableView
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
      func setupFeedCollectionView(){
         feedcCollectionView.delegate   = self
         feedcCollectionView.dataSource = self
     }
+ 
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let normalCellSize  = CGSize(width: UIScreen.main.bounds.width - 36, height: 420)
+            let loadingCellSize = CGSize(width: UIScreen.main.bounds.width - 36, height: 80)
+        if indexPath.section == 0 {
+            return normalCellSize
+        } else {
+            return loadingCellSize
+        }
+        }
  
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
@@ -121,7 +131,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return cell
         }
     }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         DispatchQueue.main.async { [weak self] in
             guard let selectedArticle = self?.articles[indexPath.section] else {return}
@@ -130,7 +139,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             self?.navigationController?.pushViewController(detailVC, animated: true)
         }
     }
-    
+        
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
