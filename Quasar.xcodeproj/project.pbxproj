@@ -15,6 +15,7 @@
 		664029DD27D3946F009BF0B1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029DC27D3946F009BF0B1 /* Extensions.swift */; };
 		664029DF27D49991009BF0B1 /* ArticleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029DE27D49991009BF0B1 /* ArticleDetailViewController.swift */; };
 		664029E127D4DBE5009BF0B1 /* LoadingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029E027D4DBE5009BF0B1 /* LoadingCollectionViewCell.swift */; };
+		664B5E3D27DDFDD8003FC460 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B5E3C27DDFDD8003FC460 /* SettingsViewController.swift */; };
 		66B9608927D32F1A0035890E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9608827D32F1A0035890E /* AppDelegate.swift */; };
 		66B9608B27D32F1A0035890E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9608A27D32F1A0035890E /* SceneDelegate.swift */; };
 		66B9608D27D32F1A0035890E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9608C27D32F1A0035890E /* HomeViewController.swift */; };
@@ -32,6 +33,7 @@
 		664029DC27D3946F009BF0B1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		664029DE27D49991009BF0B1 /* ArticleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailViewController.swift; sourceTree = "<group>"; };
 		664029E027D4DBE5009BF0B1 /* LoadingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCollectionViewCell.swift; sourceTree = "<group>"; };
+		664B5E3C27DDFDD8003FC460 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		66B9608527D32F1A0035890E /* Quasar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quasar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66B9608827D32F1A0035890E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66B9608A27D32F1A0035890E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			children = (
 				66B9608C27D32F1A0035890E /* HomeViewController.swift */,
 				664029DE27D49991009BF0B1 /* ArticleDetailViewController.swift */,
+				664B5E3C27DDFDD8003FC460 /* SettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				66B9608927D32F1A0035890E /* AppDelegate.swift in Sources */,
 				66B9608B27D32F1A0035890E /* SceneDelegate.swift in Sources */,
 				664029D727D36963009BF0B1 /* Constants.swift in Sources */,
+				664B5E3D27DDFDD8003FC460 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

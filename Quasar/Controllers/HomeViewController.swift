@@ -25,11 +25,18 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     
+//     let settingsButton : UIBarButtonItem = {
+//         let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(test(_:)))
+//         button.isEnabled = true
+//        return button
+//    }()
+    
     //MARK: - VC LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureNavBar()
         setupFeedCollectionView()
         fetchArticles()
     }
@@ -43,10 +50,17 @@ class HomeViewController: UIViewController {
     
     private func configureUI(){
         title = "Quasar Feed"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
         view.addSubview(feedcCollectionView)
     }
+    
+    private func configureNavBar(){
+        let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(didTapSettingsButton))
+        settingsButton.tintColor = .systemGray
+        navigationItem.rightBarButtonItem = settingsButton
+        navigationController?.navigationBar.prefersLargeTitles     = true
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
+    }
+    
     
     private func fetchArticles(){
         NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { [weak self] results in
@@ -83,6 +97,16 @@ class HomeViewController: UIViewController {
             }
         }
     }
+
+    @objc func test(){
+        print("Tapped")
+    }
+    
+    @objc func didTapSettingsButton(){
+        print ("Pressed")
+        let settingsVC = SettingsViewController()
+        navigationController?.pushViewController(settingsVC, animated: true)
+    }
 }
 
 //MARK: - Feed TableView
@@ -100,14 +124,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let normalCellSize  = CGSize(width: UIScreen.main.bounds.width - 36, height: 420)
-            let loadingCellSize = CGSize(width: UIScreen.main.bounds.width - 36, height: 80)
+        let normalCellSize  = CGSize(width: UIScreen.main.bounds.width - 36, height: 400)
+        let loadingCellSize = CGSize(width: UIScreen.main.bounds.width - 36, height: 80)
         if indexPath.section == 0 {
             return normalCellSize
         } else {
             return loadingCellSize
         }
-        }
+    }
  
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
