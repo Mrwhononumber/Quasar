@@ -103,7 +103,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
             case .success(let fetchedImage):
                 self?.articleImage.alpha = 0
                 self?.articleImage.image = fetchedImage
-                self?.animateImageToFadeIn(source: self!.articleImage, duration: 0.9)
+                self?.animateImageToFadeIn(source: self!.articleImage, duration: 0.8)
                 self?.activityIndicatorView.stopAnimating()
             case .failure(let error):
                 self?.articleImage.image = UIImage(named: "PlaceHolder")

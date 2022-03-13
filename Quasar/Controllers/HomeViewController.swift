@@ -135,7 +135,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         DispatchQueue.main.async { [weak self] in
             guard let selectedArticle = self?.articles[indexPath.section] else {return}
             let detailVC = ArticleDetailViewController()
-            detailVC.configure(with: selectedArticle.url)
+            detailVC.configureArticleDetailVC(with: selectedArticle.url)
             self?.navigationController?.pushViewController(detailVC, animated: true)
         }
     }

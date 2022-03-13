@@ -47,7 +47,7 @@ class ArticleDetailViewController: UIViewController {
         view.addSubview(activityIndicatorView)
     }
     
-    func configure(with url:String){
+    func configureArticleDetailVC(with url:String){
         guard let articleURL = URL(string: url) else {return}
         webView.load(URLRequest(url: articleURL))
     }
