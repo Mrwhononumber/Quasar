@@ -1,4 +1,4 @@
-# Quasar - Your personal space news and articles App! 🚀 
+# Quasar - Your personal space news App! 🚀 
 Simple iOS application in Swift for browsing the latest space news and articles
 
 
