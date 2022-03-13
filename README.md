@@ -30,5 +30,5 @@ Simple iOS application in Swift for browsing the latest space news and articles
 
 
 * Bookmark your favorite articles
-* Search for an article based on a specific keyword 
+* Browse latest Lanuches and events 
 
