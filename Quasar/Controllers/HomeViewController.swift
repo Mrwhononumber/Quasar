@@ -25,12 +25,6 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     
-//     let settingsButton : UIBarButtonItem = {
-//         let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(test(_:)))
-//         button.isEnabled = true
-//        return button
-//    }()
-    
     //MARK: - VC LifeCycle
     
     override func viewDidLoad() {
@@ -40,6 +34,12 @@ class HomeViewController: UIViewController {
         setupFeedCollectionView()
         fetchArticles()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadSavedApperance()
+    }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -51,6 +51,7 @@ class HomeViewController: UIViewController {
     private func configureUI(){
         title = "Quasar Feed"
         view.addSubview(feedcCollectionView)
+        view.backgroundColor = .systemBackground
     }
     
     private func configureNavBar(){
@@ -97,13 +98,8 @@ class HomeViewController: UIViewController {
             }
         }
     }
-
-    @objc func test(){
-        print("Tapped")
-    }
     
     @objc func didTapSettingsButton(){
-        print ("Pressed")
         let settingsVC = SettingsViewController()
         navigationController?.pushViewController(settingsVC, animated: true)
     }
