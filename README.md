@@ -30,5 +30,6 @@ Simple iOS application in Swift for browsing the latest space news and articles
 
 
 * Bookmark your favorite articles
-* Browse latest Lanuches and events 
+* Browse the upcoming lanuches and events
+* Contol the app appearance Dark/Light Mode 
 
