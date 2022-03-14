@@ -28,8 +28,8 @@ Simple iOS application in Swift for browsing the latest space news and articles
 
 # TO DO
 
-
+* ~~Contol the app appearance Dark/Light Mode 
 * Bookmark your favorite articles
 * Browse the upcoming lanuches and events
-* Contol the app appearance Dark/Light Mode 
+
 
