@@ -152,12 +152,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        DispatchQueue.main.async { [weak self] in
-            guard let selectedArticle = self?.articles[indexPath.section] else {return}
-            let detailVC = ArticleDetailViewController()
-            detailVC.configureArticleDetailVC(with: selectedArticle.url)
-            self?.navigationController?.pushViewController(detailVC, animated: true)
-        }
+        
+        let selectedArticle = articles[indexPath.row]
+        let detailVC = ArticleDetailViewController()
+        detailVC.configureArticleDetailVC(with: selectedArticle.url)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
         
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
