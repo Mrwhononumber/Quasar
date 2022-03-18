@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class SettingsViewController: UIViewController {
     
@@ -23,12 +24,12 @@ class SettingsViewController: UIViewController {
     private let items = ["Adaptive","Light","Dark"]
     
     private lazy var apperanceSegmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: items)
         let defaults = UserDefaults.standard
         let savedSelection = defaults.integer(forKey: Constants.apperanceUserDefaultsKey)
-        let control = UISegmentedControl(items: items)
         control.selectedSegmentIndex = savedSelection
-        control.translatesAutoresizingMaskIntoConstraints = false
         control.addTarget(self, action: #selector(didTapSegmentedControl(_:)), for: .valueChanged)
+        control.translatesAutoresizingMaskIntoConstraints = false
         return control
     }()
     
@@ -58,12 +59,12 @@ class SettingsViewController: UIViewController {
     //MARK: - Helper Functions
     
     private func configureUI(){
+        title = "Settings"
+        view.backgroundColor = .systemBackground
         view.addSubview(apperanceLabel)
         view.addSubview(apperanceSegmentedControl)
         view.addSubview(settingsTable)
-        title = "Settings"
         navigationController?.navigationBar.prefersLargeTitles = true
-        view.backgroundColor = .systemBackground
     }
     
     @objc private func didTapSegmentedControl(_ sender:UISegmentedControl) {
@@ -142,7 +143,10 @@ class SettingsViewController: UIViewController {
         print("Notifications switch got tapped")
     }
 }
-extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
+
+//MARK: - TableView Implementation
+
+extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate {
     
     
     private func configureSettingsTable(){
@@ -151,6 +155,27 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         settingsTable.isScrollEnabled = false
     }
     
+    private func promptRating(){
+        guard let appStoreURL = URL(string: Constants.AppStoreRatingURLString) else {
+            print ("Error with the App store link")
+            return
+        }
+        UIApplication.shared.open(appStoreURL)
+    }
+    
+    private func launchAppSharingSheet(){
+       guard let appURL = NSURL(string: Constants.AppStoreRatingURLString) else {
+            print ("Error with the App store link")
+            return
+        }
+        let objectsToShare = [appURL]
+        let activityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
+        activityViewController.popoverPresentationController?.sourceView = view
+        DispatchQueue.main.async {
+            self.present(activityViewController, animated: true, completion: nil)
+        }
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -178,20 +203,20 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             let cell = settingsTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             let mySwitch = UISwitch(frame: .zero)
-            mySwitch.setOn(true, animated: true)
             mySwitch.onTintColor = .systemPink
           
             if indexPath.row == 0 {
                 cell.textLabel?.text = "Enable Ads"
                 cell.accessoryView = mySwitch
+                mySwitch.setOn(true, animated: true)
                 mySwitch.addTarget(self, action: #selector(didTapAdsSwitch), for: .valueChanged)
             } else {
                 cell.textLabel?.text = "Enable Notifications"
                 cell.accessoryView = mySwitch
+                mySwitch.setOn(false, animated: true)
                 mySwitch.addTarget(self, action: #selector(didTapNotificationsSwitch), for: .valueChanged)
             }
-          
-            
+        
             return cell
         case 1:
             var cell = settingsTable.dequeueReusableCell(withIdentifier: "Cell2", for: indexPath)
@@ -241,7 +266,6 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         return 60
     }
     
-    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
@@ -255,5 +279,45 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         settingsTable.deselectRow(at: indexPath, animated: true)
+
+        switch indexPath {
+
+        case [1,0]:
+            promptRating()
+        case [1,1]:
+            launchAppSharingSheet()
+        case [1,2]:
+            showMailComposer()
+        default:
+            break
+        }
+    }
+        
+
+    
+    private func showMailComposer(){
+        guard MFMailComposeViewController.canSendMail() else {
+            showOneButtonAlert(title: "Oops!", action: "OK", message: "Your device Cannot send email")
+            return
+        }
+        
+        let composer = MFMailComposeViewController()
+        let deviceModel = UIDevice.modelName
+        let iOSVersion = UIDevice().systemVersion
+        let currentVersion: String?
+        currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        let topDivider = "------ Technical info ------"
+        let divider = "---------------------------"
+        let message = "\n\n\n\n\(topDivider)\nApp Version: \(currentVersion ?? "-")\nDevice model: \(deviceModel)\niOS version: \(iOSVersion)\n\(divider)"
+        composer.mailComposeDelegate = self
+        composer.setToRecipients(["Basem@quasarApp.com"])
+        composer.setSubject("Hello Quasar!")
+        composer.setMessageBody(message, isHTML: false)
+
+        present(composer, animated: true)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
     }
 }
