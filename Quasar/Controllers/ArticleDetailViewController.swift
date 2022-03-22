@@ -43,6 +43,8 @@ class ArticleDetailViewController: UIViewController {
     //MARK: - Helper Funcions
     
     private func configureUI(){
+        title = "Quasar"
+        navigationController?.navigationBar.prefersLargeTitles = false
         view.addSubview(webView)
         view.addSubview(activityIndicatorView)
     }
