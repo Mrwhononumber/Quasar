@@ -73,7 +73,7 @@ class SettingsViewController: UIViewController {
        
         switch sender.selectedSegmentIndex {
             
-        case 0 :
+        case 0 : /// Adaptive Theme
             overrideUserInterfaceStyle = .unspecified
             defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
             switch traitCollection.userInterfaceStyle {
@@ -90,16 +90,33 @@ class SettingsViewController: UIViewController {
                 break
             }
           
-        case 1 :
-            overrideUserInterfaceStyle = .light
-            defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
-            navigationController?.navigationBar.barStyle = .default
-            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+        case 1 : /// Light Theme
+            switch traitCollection.userInterfaceStyle {
+            case .light:
+                navigationController?.navigationBar.barStyle = .black
+                overrideUserInterfaceStyle = .light
+                defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
+                self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+            case .dark:
+                navigationController?.navigationBar.barStyle = .default
+                overrideUserInterfaceStyle = .light
+                defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
+                self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+                break
+            case .unspecified:
+                navigationController?.navigationBar.barStyle = .black
+                overrideUserInterfaceStyle = .light
+                defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
+                self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+            default:
+                break
+            }
 
-        case 2 :
-            overrideUserInterfaceStyle = .dark
-            defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
+
+        case 2 : /// Dark Theme
             navigationController?.navigationBar.barStyle = .black
+            view.window!.overrideUserInterfaceStyle = .dark
+            defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
             self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
 
         default:
@@ -211,7 +228,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
                 mySwitch.setOn(true, animated: true)
                 mySwitch.addTarget(self, action: #selector(didTapAdsSwitch), for: .valueChanged)
             } else {
-                cell.textLabel?.text = "Enable Notifications"
+                cell.textLabel?.text = "Enable notifications"
                 cell.accessoryView = mySwitch
                 mySwitch.setOn(false, animated: true)
                 mySwitch.addTarget(self, action: #selector(didTapNotificationsSwitch), for: .valueChanged)
