@@ -155,7 +155,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let selectedArticle = articles[indexPath.row]
         let detailVC = ArticleDetailViewController()
-        detailVC.configureArticleDetailVC(with: selectedArticle.url)
+        detailVC.currentArticle = selectedArticle
         navigationController?.pushViewController(detailVC, animated: true)
     }
         

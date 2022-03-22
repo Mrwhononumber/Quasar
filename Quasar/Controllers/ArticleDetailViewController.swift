@@ -12,11 +12,17 @@ class ArticleDetailViewController: UIViewController {
     
     //MARK: - Properties
     
+    /// This is the Article the user selected and had been passed from the HomeViewController
+    var currentArticle: Article?
+    
+    
+    /// This is the web view we gonna use to view the article
     private let webView: WKWebView = {
         let view = WKWebView()
        return view
     }()
     
+    /// The activity indicator that users will see while the article is being fetched
     private let activityIndicatorView: UIActivityIndicatorView = {
         let myView = UIActivityIndicatorView()
         myView.hidesWhenStopped = true
@@ -31,6 +37,7 @@ class ArticleDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureArticleDetailVC()
         configureWKNavigationDelegate()
     }
     
@@ -49,8 +56,9 @@ class ArticleDetailViewController: UIViewController {
         view.addSubview(activityIndicatorView)
     }
     
-    func configureArticleDetailVC(with url:String){
-        guard let articleURL = URL(string: url) else {return}
+    /// Configure the webview using the currentArticle url
+    func configureArticleDetailVC(){
+        guard let articleURL = URL(string: currentArticle!.url) else {return}
         webView.load(URLRequest(url: articleURL))
     }
 }
@@ -59,10 +67,13 @@ class ArticleDetailViewController: UIViewController {
 
 extension ArticleDetailViewController: WKNavigationDelegate {
     
+    
+    /// Set the the ArticleDetailVC as the web view navigation delegate
     func configureWKNavigationDelegate(){
         webView.navigationDelegate = self
     }
     
+   /// Hide the navigation indicator once the webview (the article) finishes loading
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         activityIndicatorView.stopAnimating()
     }
