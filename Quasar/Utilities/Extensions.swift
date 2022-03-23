@@ -21,8 +21,8 @@ extension UIViewController {
   /// Load the apperance preference choosen by the user from the user defaults
     func loadSavedApperance() {
         
-        let defaults       = UserDefaults.standard
-        let savedSelection = defaults.integer(forKey: Constants.apperanceUserDefaultsKey)
+        let defaults        = UserDefaults.standard
+        let savedSelection  = defaults.integer(forKey: Constants.apperanceUserDefaultsKey)
        
         switch savedSelection {
        
