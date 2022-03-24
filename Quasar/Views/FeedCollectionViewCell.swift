@@ -13,6 +13,10 @@ class FeedCollectionViewCell: UICollectionViewCell {
     
     static let idintifier = "FeedCollectionViewCell"
     
+    var homeVC: HomeViewController?
+    
+    private var isFavorite = false
+    
     private let articleImage: UIImageView = {
   
         let image = UIImageView()
@@ -24,7 +28,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-     let articleTitle: UILabel = {
+    private let articleTitle: UILabel = {
         
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -35,17 +39,32 @@ class FeedCollectionViewCell: UICollectionViewCell {
         return title
     }()
     
-     let articleSource: UILabel = {
+    private let articleSource: UILabel = {
         
         let source = UILabel()
         source.translatesAutoresizingMaskIntoConstraints = false
         source.numberOfLines = 1
-         source.textColor = .systemYellow
-         source.font = .boldSystemFont(ofSize: 14)
+        source.textColor = .systemYellow
+        source.font = .boldSystemFont(ofSize: 14)
         return source
     }()
     
+    private let favoriteButton: UIButton = {
+       
+        let button = UIButton()
+
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold, scale: .large)
+        let heartImage = UIImage(systemName: "heart", withConfiguration: largeConfig)
+        let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+    
+        button.setImage(heartImage, for: .normal)
+        button.tintColor = .systemYellow
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private let activityIndicatorView: UIActivityIndicatorView = {
+      
         let myView = UIActivityIndicatorView()
         myView.hidesWhenStopped = true
         myView.style = .medium
@@ -55,7 +74,8 @@ class FeedCollectionViewCell: UICollectionViewCell {
     }()
     
     private let blackView: UIView = {
-       let view = UIView()
+     
+        let view = UIView()
         view.backgroundColor = .black
         view.alpha = 0.5
         return view
@@ -67,7 +87,9 @@ class FeedCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         configureUI()
         setConstraints()
-    
+        configureFavoriteButton()
+        favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
+
     }
     
     override func layoutSubviews() {
@@ -92,6 +114,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(articleSource)
         articleImage.addSubview(blackView)
         articleImage.addSubview(articleTitle)
+        contentView.addSubview(favoriteButton)
     }
     
     func configureCell(with article:Article){
@@ -134,11 +157,48 @@ class FeedCollectionViewCell: UICollectionViewCell {
             articleSource.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ]
         
+        let favoriteButtonConstraints = [
+            favoriteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            favoriteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+        ]
+        
         NSLayoutConstraint.activate(articleImageConstraints)
         NSLayoutConstraint.activate(artticleTitleConstraints)
         NSLayoutConstraint.activate(articleSourceConstraints)
+        NSLayoutConstraint.activate(favoriteButtonConstraints)
     }
     
+    private func configureFavoriteButton(){
+        favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
+    }
+    
+    
+    @objc private func didTapFavoriteButton(_ sender: UIButton) {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold, scale: .large)
+        let heartImage = UIImage(systemName: "heart", withConfiguration: largeConfig)
+        let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+        
+        
+
+        switch isFavorite {
+
+        case false:
+            favoriteButton.setImage(filledHeartImage, for: .normal)
+            favoriteButton.tintColor = .systemPink
+            isFavorite = true
+            homeVC?.fetchFavoritedCell(cell: self, toBePersisted: true)
+            print("favorite")
+            
+        case true:
+            favoriteButton.setImage(heartImage, for: .normal)
+            favoriteButton.tintColor = .systemYellow
+            isFavorite = false
+            homeVC?.fetchFavoritedCell(cell: self, toBePersisted: false)
+            print("unfavorite")
+        }
+    }
+    
+
     private func animateImageToFadeIn(source: UIView?, duration: TimeInterval){
         guard source != nil else {return}
          UIView.animate(withDuration: duration) { [weak self] in

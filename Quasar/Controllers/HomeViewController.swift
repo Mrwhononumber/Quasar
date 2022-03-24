@@ -105,7 +105,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-//MARK: - Feed TableView
+//MARK: - Feed CollectionView
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -142,6 +142,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if indexPath.section == 0 {
             let cell = feedcCollectionView.dequeueReusableCell(withReuseIdentifier: FeedCollectionViewCell.idintifier, for: indexPath) as! FeedCollectionViewCell
             cell.AddShadow()
+            cell.homeVC = self
             let selectedArticle = articles[indexPath.row]
             cell.configureCell(with: selectedArticle)
             return cell
@@ -152,7 +153,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        print("did select")
         let selectedArticle = articles[indexPath.row]
         let detailVC = ArticleDetailViewController()
         detailVC.currentArticle = selectedArticle
@@ -169,4 +170,30 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
         }
     }
+    
+    //MARK: - Add articles to favorites implementation
+    
+    /// This  method is responsible for persisting the articles bookmarked by the user, and that happen in two steps:
+    /// 1)  Identifing the cell that got tapped (bookmarked/favorited) by the user
+    /// 2)  Persisting or deleting the corresponding article from data base
+    /// - Parameters:
+    ///   - cell: This is the sellected cell which had been passed by the collectionView cell
+    ///   - toBePersisted: This is is the state the user choose , if true: the article should be persisted, if false: the article showld be deleted
+    func fetchFavoritedCell(cell: UICollectionViewCell, toBePersisted:Bool){
+        /// Here we identifiy which article to be handeled
+        let favoritedCellIndexPath = feedcCollectionView.indexPath(for: cell)
+        let favoritedArticle = articles[favoritedCellIndexPath!.row]
+        /// Here we handel the two possible cases the user could choose
+        switch toBePersisted {
+            
+        case true:
+            print("persist Article: \(favoritedArticle.title)")
+        case false:
+            print("Delete Article: \(favoritedArticle.title)")
+        }
+        
+    }
+    
+    
+    
 }
