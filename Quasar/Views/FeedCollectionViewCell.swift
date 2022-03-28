@@ -186,14 +186,14 @@ class FeedCollectionViewCell: UICollectionViewCell {
             favoriteButton.setImage(filledHeartImage, for: .normal)
             favoriteButton.tintColor = .systemPink
             isFavorite = true
-            homeVC?.fetchFavoritedCell(cell: self, toBePersisted: true)
+            homeVC?.handleArticlePersisting(cell: self, toBePersisted: true)
             print("favorite")
             
         case true:
             favoriteButton.setImage(heartImage, for: .normal)
             favoriteButton.tintColor = .systemYellow
             isFavorite = false
-            homeVC?.fetchFavoritedCell(cell: self, toBePersisted: false)
+            homeVC?.handleArticlePersisting(cell: self, toBePersisted: false)
             print("unfavorite")
         }
     }

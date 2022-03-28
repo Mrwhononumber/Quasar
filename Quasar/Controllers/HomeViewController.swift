@@ -174,12 +174,12 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     //MARK: - Add articles to favorites implementation
     
     /// This  method is responsible for persisting the articles bookmarked by the user, and that happen in two steps:
-    /// 1)  Identifing the cell that got tapped (bookmarked/favorited) by the user
+    /// 1)  Identifing the cell (Article) that got tapped (bookmarked/favorited) by the user
     /// 2)  Persisting or deleting the corresponding article from data base
     /// - Parameters:
     ///   - cell: This is the sellected cell which had been passed by the collectionView cell
     ///   - toBePersisted: This is is the state the user choose , if true: the article should be persisted, if false: the article showld be deleted
-    func fetchFavoritedCell(cell: UICollectionViewCell, toBePersisted:Bool){
+    func handleArticlePersisting(cell: UICollectionViewCell, toBePersisted:Bool){
         /// Here we identifiy which article to be handeled
         let favoritedCellIndexPath = feedcCollectionView.indexPath(for: cell)
         let favoritedArticle = articles[favoritedCellIndexPath!.row]
