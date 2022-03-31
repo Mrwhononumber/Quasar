@@ -11,10 +11,13 @@ class HomeViewController: UIViewController {
     
     //MARK: - Properties
     
+    /// An Array of the feed articles
     private var articles = [Article]()
+    /// Number of page which will be increased incrementally to fetch more articles
     private var pageNumber = 1
+    /// A flag of the current status, weather more articles  are being fetched or not
     private var isFetchingMoreArticles = false
-    
+    /// The collectionView holding which responsible for presenting the articles objects
     private let feedcCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 40
@@ -63,6 +66,9 @@ class HomeViewController: UIViewController {
     }
     
     
+    /// This method is resposible for excuting the network call:
+    /// In the success case:  it returns an array of articles so we assign it to the self.Articles
+    /// In the failure case: it returns a csutom error (Quasar Error), so we show a one button alert to the user with the error message
     private func fetchArticles(){
         NetworkManager.shared.fetchArticleData(with: Constants.APIEndPoint+String(pageNumber)) { [weak self] results in
             switch results {
@@ -78,6 +84,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    /// This method is responsible for fetching more articles
     private func fetchMoreArticles(){
         
         pageNumber += 11
@@ -99,13 +106,14 @@ class HomeViewController: UIViewController {
         }
     }
     
+    /// This method is responsible for pushing the settingsViewController to the navigation stack
     @objc func didTapSettingsButton(){
         let settingsVC = SettingsViewController()
         navigationController?.pushViewController(settingsVC, animated: true)
     }
 }
 
-//MARK: - Feed TableView
+//MARK: - Feed CollectionView Implementation
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -158,9 +166,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         detailVC.currentArticle = selectedArticle
         navigationController?.pushViewController(detailVC, animated: true)
     }
-        
+    
+    /// This method is responsible for fetching more articles once the user scrolls until he reaches the end of the collectionView Feed
+    /// - Parameter scrollView: The scrollView here is the FeedCollectionView
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        /// The Y access offset position
         let offsetY = scrollView.contentOffset.y
+        /// The total content height
         let contentHeight = scrollView.contentSize.height
         
         if offsetY > contentHeight - scrollView.frame.height {

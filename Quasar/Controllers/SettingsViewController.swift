@@ -66,7 +66,7 @@ class SettingsViewController: UIViewController {
         view.addSubview(settingsTable)
         navigationController?.navigationBar.prefersLargeTitles = true
     }
-    
+    /// This method is responsible for configuring each segment's function and saving the last t status in the user defaults
     @objc private func didTapSegmentedControl(_ sender:UISegmentedControl) {
         
         let defaults = UserDefaults.standard
@@ -152,10 +152,11 @@ class SettingsViewController: UIViewController {
         NSLayoutConstraint.activate(settingsTableConstraints)
     }
     
+    /// This functionality to be added: controling the ads
     @objc private func didTapAdsSwitch(){
         print("Ads switch got tapped")
     }
-    
+    /// This functionality to be added: controlling notifications
     @objc private func didTapNotificationsSwitch(){
         print("Notifications switch got tapped")
     }
@@ -172,6 +173,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
         settingsTable.isScrollEnabled = false
     }
     
+    /// this function is responsible for opening the app's page on the app store
     private func promptRating(){
         guard let appStoreURL = URL(string: Constants.AppStoreRatingURLString) else {
             print ("Error with the App store link")
@@ -179,7 +181,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
         }
         UIApplication.shared.open(appStoreURL)
     }
-    
+    /// This method is responsible for triggering the sharing sheet
     private func launchAppSharingSheet(){
        guard let appURL = NSURL(string: Constants.AppStoreRatingURLString) else {
             print ("Error with the App store link")
@@ -225,7 +227,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
             if indexPath.row == 0 {
                 cell.textLabel?.text = "Enable Ads"
                 cell.accessoryView = mySwitch
-                mySwitch.setOn(true, animated: true)
+                mySwitch.setOn(false, animated: false)
                 mySwitch.addTarget(self, action: #selector(didTapAdsSwitch), for: .valueChanged)
             } else {
                 cell.textLabel?.text = "Enable notifications"
@@ -242,7 +244,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
             switch indexPath.row {
             case 0:
                 cell.textLabel?.text = "Leave a rating"
-                cell.detailTextLabel?.text = "Help the developer buy a PSVR2"
+                cell.detailTextLabel?.text = "Help the developer if you like the app :)"
                 cell.imageView?.image = UIImage(systemName: "hand.thumbsup", withConfiguration: largeConfig)
                 cell.imageView?.tintColor = .systemPink
             case 1:
@@ -311,7 +313,9 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
     }
         
 
-    
+    /// This function is responsible for:
+    /// Trigering the mail composer so the user can send a feedback
+    /// Extract the user's device info and include it as a part of the user's emailmessage body
     private func showMailComposer(){
         guard MFMailComposeViewController.canSendMail() else {
             showOneButtonAlert(title: "Oops!", action: "OK", message: "Your device Cannot send email")
@@ -333,7 +337,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
 
         present(composer, animated: true)
     }
-    
+    /// This function is resposible for dismissing the mail composer
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         dismiss(animated: true, completion: nil)
     }

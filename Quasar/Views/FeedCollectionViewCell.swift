@@ -11,6 +11,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
 
   //MARK: - Properties
     
+    /// The cell idintifier
     static let idintifier = "FeedCollectionViewCell"
     
     private let articleImage: UIImageView = {
@@ -35,6 +36,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         return title
     }()
     
+    /// The article's publisher website
      let articleSource: UILabel = {
         
         let source = UILabel()
@@ -54,6 +56,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         return myView
     }()
     
+    /// This Black view is used as an overlay to dim the article image, add visually pleasing contrast, and it makes the title more readable
     private let blackView: UIView = {
        let view = UIView()
         view.backgroundColor = .black
@@ -67,7 +70,6 @@ class FeedCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         configureUI()
         setConstraints()
-    
     }
     
     override func layoutSubviews() {
@@ -80,6 +82,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Configuring the article image while it's in the state of being prepared for re-use
     override func prepareForReuse() {
         articleImage.image = nil
     }
@@ -94,6 +97,8 @@ class FeedCollectionViewCell: UICollectionViewCell {
         articleImage.addSubview(articleTitle)
     }
     
+    /// This metod is responsible for configuring the properties of the cell
+    /// - Parameter article: This is the article that holds the properties values which had been passed from the HomeViewcontroller using the CellForRow method
     func configureCell(with article:Article){
         
         articleTitle.text = article.title
@@ -139,6 +144,10 @@ class FeedCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate(articleSourceConstraints)
     }
     
+    /// This method is resposible for initiating a fade in animation to  any choosen UIView
+    /// - Parameters:
+    ///   - source: Here you input the UIView you needed to be animated
+    ///   - duration: the duration in which the fade in animation should complete ( animation duration )
     private func animateImageToFadeIn(source: UIView?, duration: TimeInterval){
         guard source != nil else {return}
          UIView.animate(withDuration: duration) { [weak self] in
@@ -146,4 +155,3 @@ class FeedCollectionViewCell: UICollectionViewCell {
          }
      }
 }
-

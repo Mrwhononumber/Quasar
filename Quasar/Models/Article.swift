@@ -7,6 +7,9 @@
 
 import Foundation
 
+
+
+/// This is the Article Model which gonna be used to decode the JSON object we'd recive from after a successful network call
 struct Article: Decodable {
     
     let id: Int

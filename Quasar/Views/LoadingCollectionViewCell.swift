@@ -7,10 +7,11 @@
 
 import UIKit
 
+/// This cell should be used while we're fetching more articles to indicate to the user that more articles are being loaded
 class LoadingCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
-      
+    /// Cell idintifier
     static let idintifier = "LoadingCollectionViewCell"
 
      let activityIndicatorView: UIActivityIndicatorView = {

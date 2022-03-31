@@ -55,6 +55,7 @@ extension UIViewController {
 }
 
 extension UICollectionViewCell {
+    ///  Adds a shadow to the cell
     func AddShadow() {
         let radius: CGFloat = 10
         contentView.layer.cornerRadius  = radius
@@ -73,6 +74,7 @@ extension UICollectionViewCell {
 }
 
 extension UIDevice {
+    
   static let modelName: String = {
     var systemInfo = utsname()
     uname(&systemInfo)
@@ -81,7 +83,7 @@ extension UIDevice {
       guard let value = element.value as? Int8, value != 0 else { return identifier }
       return identifier + String(UnicodeScalar(UInt8(value)))
     }
-    
+    /// Identify the name of the Device used by the user
     func mapToDevice(identifier: String) -> String {
       #if os(iOS)
       switch identifier {
