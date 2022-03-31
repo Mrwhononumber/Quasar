@@ -93,19 +93,16 @@ class SettingsViewController: UIViewController {
         case 1 : /// Light Theme
             switch traitCollection.userInterfaceStyle {
             case .light:
-                navigationController?.navigationBar.barStyle = .black
-                overrideUserInterfaceStyle = .light
-                defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
-                self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+                break
             case .dark:
-                navigationController?.navigationBar.barStyle = .default
                 overrideUserInterfaceStyle = .light
+                navigationController?.navigationBar.barStyle = .default
                 defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
                 self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
                 break
             case .unspecified:
-                navigationController?.navigationBar.barStyle = .black
                 overrideUserInterfaceStyle = .light
+                navigationController?.navigationBar.barStyle = .black
                 defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
                 self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
             default:
@@ -114,8 +111,8 @@ class SettingsViewController: UIViewController {
 
 
         case 2 : /// Dark Theme
+            overrideUserInterfaceStyle = .dark
             navigationController?.navigationBar.barStyle = .black
-            view.window!.overrideUserInterfaceStyle = .dark
             defaults.set(sender.selectedSegmentIndex, forKey: Constants.apperanceUserDefaultsKey)
             self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
 
