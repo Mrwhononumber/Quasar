@@ -33,7 +33,7 @@ Simple iOS application in Swift for browsing the latest space news and articles
 
  ✅  Contol the app appearance Dark/Light Mode
  
- ⌛  The ability to Bookmark your favorite articles
+ ✅  The ability to Bookmark your favorite articles
  
  ⌛  Browse the upcoming lanuches and events
 
