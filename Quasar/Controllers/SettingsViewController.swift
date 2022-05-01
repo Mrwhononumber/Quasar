@@ -181,7 +181,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
     }
     /// This method is responsible for triggering the sharing sheet
     private func launchAppSharingSheet(){
-       guard let appURL = NSURL(string: Constants.AppStoreRatingURLString) else {
+       guard let appURL = NSURL(string: Constants.appTestFlightURLString) else {
             print ("Error with the App store link")
             return
         }
