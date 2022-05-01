@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeViewController: UIViewController {
     
@@ -17,7 +18,7 @@ class HomeViewController: UIViewController {
     private var pageNumber = 1
     /// A flag of the current status, weather more articles  are being fetched or not
     private var isFetchingMoreArticles = false
-    /// The collectionView holding which responsible for presenting the articles objects
+    /// The collectionView responsible for presenting the articles 
     private let feedcCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 40
@@ -41,6 +42,8 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadSavedApperance()
+        tabBarController?.tabBar.isHidden = false
+        feedcCollectionView.reloadData()
     }
     
     
@@ -113,7 +116,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-//MARK: - Feed CollectionView Implementation
+//MARK: - Feed CollectionView
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -150,8 +153,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if indexPath.section == 0 {
             let cell = feedcCollectionView.dequeueReusableCell(withReuseIdentifier: FeedCollectionViewCell.idintifier, for: indexPath) as! FeedCollectionViewCell
             cell.AddShadow()
+            cell.homeVC = self
             let selectedArticle = articles[indexPath.row]
             cell.configureCell(with: selectedArticle)
+            cell.checkIfCurentArticleIsFavouriteWith(article: selectedArticle)
             return cell
         } else {
             let cell = feedcCollectionView.dequeueReusableCell(withReuseIdentifier: LoadingCollectionViewCell.idintifier, for: indexPath) as! LoadingCollectionViewCell
@@ -160,7 +165,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        print("did select")
         let selectedArticle = articles[indexPath.row]
         let detailVC = ArticleDetailViewController()
         detailVC.currentArticle = selectedArticle
@@ -179,6 +184,38 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             if !isFetchingMoreArticles {
                 fetchMoreArticles()
             }
+        }
+    }
+    
+    //MARK: - Add articles to favorites implementation
+    
+    /// This  method is responsible for persisting the articles bookmarked by the user, and that happen in two steps:
+    /// 1)  Identifing the cell (Article) that got tapped (bookmarked/favorited) by the user
+    /// 2)  Persisting or deleting the corresponding article from dat base
+    /// - Parameters:
+    ///   - cell: This is the sellected cell which had been passed by the collectionView cell
+    ///   - toBePersisted: This is is the state the user choose , if true: the article should be persisted, if false: the article showld be deleted
+    func handleArticlePersisting(cell: UICollectionViewCell, toBePersisted:Bool){
+        /// Here we identifiy which article to be handeled
+        let selectedCellIndexPath = feedcCollectionView.indexPath(for: cell)
+        let selectedArticle = articles[selectedCellIndexPath!.row]
+      
+        /// Here we handel the two possible cases the user could choose
+        switch toBePersisted {
+            
+        case true: /// Here we save the article to the local database
+            print("persist Article: \(selectedArticle.title)")
+            DataPersistenceManager.shared.persistArticleWith(article: selectedArticle) { result in
+                switch result {
+                case .success(_):
+                    print("Article saved successfuly")
+                case .failure(let error):
+                    self.showOneButtonAlert(title: "Error", action: "Ok", message: error.rawValue)
+                }
+            }
+        case false: /// TODO:  We delete the article from local database
+          showOneButtonAlert(title: "", action: "Ok", message:  "Article has been saved already!")
+            break
         }
     }
 }

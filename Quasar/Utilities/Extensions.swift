@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+//MARK: - UIViewController
 
 extension UIViewController {
     
@@ -18,6 +19,16 @@ extension UIViewController {
         alertController.addAction(defaultAction)
         present(alertController, animated: true)
     }
+    
+    func showDestructiveAlert(title:String, action: String, message: String, handler: @escaping (UIAlertAction) -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: action, style: .destructive, handler: handler)
+        let cancelAction = UIAlertAction(title: "cancel", style: .cancel, handler: nil)
+        alertController.addAction(defaultAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+        }
+    
   /// Load the apperance preference choosen by the user from the user defaults
     func loadSavedApperance() {
         
@@ -54,6 +65,8 @@ extension UIViewController {
     }
 }
 
+//MARK: - UICollectionViewCell
+
 extension UICollectionViewCell {
     ///  Adds a shadow to the cell
     func AddShadow() {
@@ -72,6 +85,8 @@ extension UICollectionViewCell {
         layer.cornerRadius  = radius
     }
 }
+
+//MARK: - UIDevice
 
 extension UIDevice {
     
@@ -152,5 +167,9 @@ extension UIDevice {
   }()
 }
 
+//MARK: - Notification.name
 
-
+extension Notification.Name {
+    
+    static let deleteArticleButtontapped = Notification.Name("deleteArticleButtontapped")
+}

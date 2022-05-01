@@ -11,9 +11,15 @@ class FeedCollectionViewCell: UICollectionViewCell {
 
   //MARK: - Properties
     
-    /// The cell idintifier
+    /// Cell idintifier
     static let idintifier = "FeedCollectionViewCell"
     
+    /// Instance of the HomeViewController
+    var homeVC: HomeViewController?
+    
+    /// Flag that holds the status of the cell weather it's persisted or not
+    private var isFavorite = false
+    /// Article's image
     private let articleImage: UIImageView = {
   
         let image = UIImageView()
@@ -24,8 +30,8 @@ class FeedCollectionViewCell: UICollectionViewCell {
         image.layer.cornerRadius = 10
         return image
     }()
-    
-     let articleTitle: UILabel = {
+    /// Articles title
+    private let articleTitle: UILabel = {
         
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -42,12 +48,27 @@ class FeedCollectionViewCell: UICollectionViewCell {
         let source = UILabel()
         source.translatesAutoresizingMaskIntoConstraints = false
         source.numberOfLines = 1
-         source.textColor = .systemYellow
-         source.font = .boldSystemFont(ofSize: 14)
+        source.textColor = .systemYellow
+        source.font = .boldSystemFont(ofSize: 14)
         return source
+    }()
+    /// Button that adds the article to favorites
+    private let favoriteButton: UIButton = {
+       
+        let button = UIButton()
+
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold, scale: .large)
+        let heartImage = UIImage(systemName: "heart", withConfiguration: largeConfig)
+        let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+    
+        button.setImage(heartImage, for: .normal)
+        button.tintColor = .systemPink
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private let activityIndicatorView: UIActivityIndicatorView = {
+      
         let myView = UIActivityIndicatorView()
         myView.hidesWhenStopped = true
         myView.style = .medium
@@ -58,7 +79,8 @@ class FeedCollectionViewCell: UICollectionViewCell {
     
     /// This Black view is used as an overlay to dim the article image, add visually pleasing contrast, and it makes the title more readable
     private let blackView: UIView = {
-       let view = UIView()
+     
+        let view = UIView()
         view.backgroundColor = .black
         view.alpha = 0.5
         return view
@@ -70,6 +92,11 @@ class FeedCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         configureUI()
         setConstraints()
+        updateFavoriteButtonUI()
+//        configureFavoriteButton()
+        listenToDeleteButtonUpdates()
+        favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
+
     }
     
     override func layoutSubviews() {
@@ -95,6 +122,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(articleSource)
         articleImage.addSubview(blackView)
         articleImage.addSubview(articleTitle)
+        contentView.addSubview(favoriteButton)
     }
     
     /// This metod is responsible for configuring the properties of the cell
@@ -103,7 +131,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         
         articleTitle.text = article.title
         articleSource.text = article.newsSite
-        NetworkManager.shared.fetchArticleImage(url: article.imageUrl) { [weak self] results in
+        NetworkManager.shared.fetchArticleImageWith(url: article.imageUrl) { [weak self] results in
             switch results {
             case .success(let fetchedImage):
                 self?.articleImage.alpha = 0
@@ -139,19 +167,100 @@ class FeedCollectionViewCell: UICollectionViewCell {
             articleSource.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ]
         
+        let favoriteButtonConstraints = [
+            favoriteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            favoriteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+        ]
+        
         NSLayoutConstraint.activate(articleImageConstraints)
         NSLayoutConstraint.activate(artticleTitleConstraints)
         NSLayoutConstraint.activate(articleSourceConstraints)
+        NSLayoutConstraint.activate(favoriteButtonConstraints)
     }
     
-    /// This method is resposible for initiating a fade in animation to  any choosen UIView
+    private func configureFavoriteButton() {
+        favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
+    }
+    
+    private func updateFavoriteButtonUI() {
+        if isFavorite {
+            let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold, scale: .large)
+            let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+            favoriteButton.setImage(filledHeartImage, for: .normal)
+            favoriteButton.tintColor = .systemPink
+            
+            print("LETS MAKE BIG HEART")
+        }
+    }
+    
+    
+    @objc private func didTapFavoriteButton(_ sender: UIButton) {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold, scale: .large)
+        let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+        
+        switch isFavorite {
+            
+        case false:
+            favoriteButton.setImage(filledHeartImage, for: .normal)
+            favoriteButton.tintColor = .systemPink
+            isFavorite = true
+            homeVC?.handleArticlePersisting(cell: self, toBePersisted: true)
+            print("favorite")
+            
+            
+            
+        case true:
+            
+            print("limboooooo land !!!")
+            homeVC?.handleArticlePersisting(cell: self, toBePersisted: false)
+//            favoriteButton.setImage(heartImage, for: .normal)
+//            favoriteButton.tintColor = .systemYellow
+//            isFavorite = false
+//            print("unfavorite")
+            break
+        }
+    }
+    
+    /// Here we check if the article is in favorites or not, and to be called while dequing the cell in the cellForItem method
+    /// - Parameter article: The current article this cell holds
+    func checkIfCurentArticleIsFavouriteWith(article:Article){
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold, scale: .large)
+        switch DataPersistenceManager.shared.checkIfArticleIsStoredWith(article.id) {
+           
+        case true:
+            print("There are favorites")
+            isFavorite = true
+            let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+            favoriteButton.setImage(filledHeartImage, for: .normal)
+            favoriteButton.tintColor = .systemPink
+            
+        case false:
+            print("No favorites")
+            isFavorite = false
+            let heartImage = UIImage(systemName: "heart", withConfiguration: largeConfig)
+            favoriteButton.setImage(heartImage, for: .normal)
+            favoriteButton.tintColor = .systemPink
+        }
+    }
+    
+    
+    /// This method is responsible for aplying a fade in animation for the articles images
     /// - Parameters:
-    ///   - source: Here you input the UIView you needed to be animated
-    ///   - duration: the duration in which the fade in animation should complete ( animation duration )
+    ///   - source: The view to be animated
+    ///   - duration: the duration of the animation
     private func animateImageToFadeIn(source: UIView?, duration: TimeInterval){
         guard source != nil else {return}
          UIView.animate(withDuration: duration) { [weak self] in
              self?.articleImage.alpha = 1
          }
      }
+    
+    
+    /// change the isFavorite value when the article is deleted from favorites VC
+    private func listenToDeleteButtonUpdates(){
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.deleteArticleButtontapped, object: nil, queue: nil) { notificaiton in
+            print("Deletion notification received")
+            self.isFavorite = false
+        }
+    }
 }
