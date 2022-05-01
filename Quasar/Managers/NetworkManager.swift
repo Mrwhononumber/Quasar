@@ -54,7 +54,7 @@ class NetworkManager {
         task.resume()
     }
     
-    func fetchArticleImage(url: String, completion: @escaping (Result<UIImage, QuasarError>) -> Void ){
+    func fetchArticleImageWith(url: String, completion: @escaping (Result<UIImage, QuasarError>) -> Void ){
         
         if let cachedImage = cache.object(forKey: url as NSString) {
             completion(.success(cachedImage))

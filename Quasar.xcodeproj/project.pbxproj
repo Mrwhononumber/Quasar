@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6604EE0627F6E8C30067AE32 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6604EE0527F6E8C30067AE32 /* FavoritesViewController.swift */; };
+		6604EE0827F6EAA90067AE32 /* FavoritesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6604EE0727F6EAA90067AE32 /* FavoritesCollectionViewCell.swift */; };
+		6604EE0A27F70D230067AE32 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6604EE0927F70D230067AE32 /* MainTabBarController.swift */; };
+		6604EE0D27F8C3450067AE32 /* QuasarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6604EE0B27F8C3450067AE32 /* QuasarModel.xcdatamodeld */; };
+		6604EE0F27F8C5C30067AE32 /* DataPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6604EE0E27F8C5C30067AE32 /* DataPersistenceManager.swift */; };
 		664029D327D33F24009BF0B1 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029D227D33F24009BF0B1 /* FeedCollectionViewCell.swift */; };
 		664029D527D3692D009BF0B1 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029D427D3692D009BF0B1 /* NetworkManager.swift */; };
 		664029D727D36963009BF0B1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664029D627D36963009BF0B1 /* Constants.swift */; };
@@ -22,9 +27,15 @@
 		66B9609027D32F1A0035890E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B9608E27D32F1A0035890E /* Main.storyboard */; };
 		66B9609227D32F210035890E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66B9609127D32F210035890E /* Assets.xcassets */; };
 		66B9609527D32F210035890E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B9609327D32F210035890E /* LaunchScreen.storyboard */; };
+		66C535432802149800351DF3 /* EmptyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C535422802149800351DF3 /* EmptyBackgroundView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6604EE0527F6E8C30067AE32 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		6604EE0727F6EAA90067AE32 /* FavoritesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCollectionViewCell.swift; sourceTree = "<group>"; };
+		6604EE0927F70D230067AE32 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		6604EE0C27F8C3450067AE32 /* QuasarModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuasarModel.xcdatamodel; sourceTree = "<group>"; };
+		6604EE0E27F8C5C30067AE32 /* DataPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPersistenceManager.swift; sourceTree = "<group>"; };
 		664029D227D33F24009BF0B1 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		664029D427D3692D009BF0B1 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		664029D627D36963009BF0B1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -42,6 +53,7 @@
 		66B9609127D32F210035890E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66B9609427D32F210035890E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66B9609627D32F210035890E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66C535422802149800351DF3 /* EmptyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBackgroundView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +73,8 @@
 				66B9608C27D32F1A0035890E /* HomeViewController.swift */,
 				664029DE27D49991009BF0B1 /* ArticleDetailViewController.swift */,
 				664B5E3C27DDFDD8003FC460 /* SettingsViewController.swift */,
+				6604EE0527F6E8C30067AE32 /* FavoritesViewController.swift */,
+				6604EE0927F70D230067AE32 /* MainTabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -70,6 +84,8 @@
 			children = (
 				664029D227D33F24009BF0B1 /* FeedCollectionViewCell.swift */,
 				664029E027D4DBE5009BF0B1 /* LoadingCollectionViewCell.swift */,
+				6604EE0727F6EAA90067AE32 /* FavoritesCollectionViewCell.swift */,
+				66C535422802149800351DF3 /* EmptyBackgroundView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -86,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				664029D427D3692D009BF0B1 /* NetworkManager.swift */,
+				6604EE0E27F8C5C30067AE32 /* DataPersistenceManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -130,6 +147,7 @@
 				66B9609127D32F210035890E /* Assets.xcassets */,
 				66B9609327D32F210035890E /* LaunchScreen.storyboard */,
 				66B9609627D32F210035890E /* Info.plist */,
+				6604EE0B27F8C3450067AE32 /* QuasarModel.xcdatamodeld */,
 			);
 			path = Quasar;
 			sourceTree = "<group>";
@@ -205,17 +223,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6604EE0827F6EAA90067AE32 /* FavoritesCollectionViewCell.swift in Sources */,
+				6604EE0627F6E8C30067AE32 /* FavoritesViewController.swift in Sources */,
+				6604EE0A27F70D230067AE32 /* MainTabBarController.swift in Sources */,
 				66B9608D27D32F1A0035890E /* HomeViewController.swift in Sources */,
 				664029DD27D3946F009BF0B1 /* Extensions.swift in Sources */,
 				664029D327D33F24009BF0B1 /* FeedCollectionViewCell.swift in Sources */,
 				664029D927D36A6F009BF0B1 /* QuasarError.swift in Sources */,
 				664029DF27D49991009BF0B1 /* ArticleDetailViewController.swift in Sources */,
+				66C535432802149800351DF3 /* EmptyBackgroundView.swift in Sources */,
 				664029D527D3692D009BF0B1 /* NetworkManager.swift in Sources */,
 				664029DB27D36B76009BF0B1 /* Article.swift in Sources */,
 				664029E127D4DBE5009BF0B1 /* LoadingCollectionViewCell.swift in Sources */,
 				66B9608927D32F1A0035890E /* AppDelegate.swift in Sources */,
+				6604EE0F27F8C5C30067AE32 /* DataPersistenceManager.swift in Sources */,
 				66B9608B27D32F1A0035890E /* SceneDelegate.swift in Sources */,
 				664029D727D36963009BF0B1 /* Constants.swift in Sources */,
+				6604EE0D27F8C3450067AE32 /* QuasarModel.xcdatamodeld in Sources */,
 				664B5E3D27DDFDD8003FC460 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,6 +458,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6604EE0B27F8C3450067AE32 /* QuasarModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6604EE0C27F8C3450067AE32 /* QuasarModel.xcdatamodel */,
+			);
+			currentVersion = 6604EE0C27F8C3450067AE32 /* QuasarModel.xcdatamodel */;
+			path = QuasarModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 66B9607D27D32F1A0035890E /* Project object */;
 }

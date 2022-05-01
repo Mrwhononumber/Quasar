@@ -11,12 +11,15 @@ class FeedCollectionViewCell: UICollectionViewCell {
 
   //MARK: - Properties
     
+    /// Cell idintifier
     static let idintifier = "FeedCollectionViewCell"
     
+    /// Instance of the HomeViewController
     var homeVC: HomeViewController?
     
+    /// Flag that holds the status of the cell weather it's persisted or not
     private var isFavorite = false
-    
+    /// Article's image
     private let articleImage: UIImageView = {
   
         let image = UIImageView()
@@ -27,7 +30,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         image.layer.cornerRadius = 10
         return image
     }()
-    
+    /// Articles title
     private let articleTitle: UILabel = {
         
         let title = UILabel()
@@ -38,7 +41,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         title.textColor = .white
         return title
     }()
-    
+    /// Articles publisher website
     private let articleSource: UILabel = {
         
         let source = UILabel()
@@ -48,7 +51,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         source.font = .boldSystemFont(ofSize: 14)
         return source
     }()
-    
+    /// Button that adds the article to favorites
     private let favoriteButton: UIButton = {
        
         let button = UIButton()
@@ -58,7 +61,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
     
         button.setImage(heartImage, for: .normal)
-        button.tintColor = .systemYellow
+        button.tintColor = .systemPink
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -87,7 +90,9 @@ class FeedCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         configureUI()
         setConstraints()
-        configureFavoriteButton()
+        updateFavoriteButtonUI()
+//        configureFavoriteButton()
+        listenToDeleteButtonUpdates()
         favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
 
     }
@@ -121,7 +126,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         
         articleTitle.text = article.title
         articleSource.text = article.newsSite
-        NetworkManager.shared.fetchArticleImage(url: article.imageUrl) { [weak self] results in
+        NetworkManager.shared.fetchArticleImageWith(url: article.imageUrl) { [weak self] results in
             switch results {
             case .success(let fetchedImage):
                 self?.articleImage.alpha = 0
@@ -168,20 +173,28 @@ class FeedCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate(favoriteButtonConstraints)
     }
     
-    private func configureFavoriteButton(){
+    private func configureFavoriteButton() {
         favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
+    }
+    
+    private func updateFavoriteButtonUI() {
+        if isFavorite {
+            let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold, scale: .large)
+            let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+            favoriteButton.setImage(filledHeartImage, for: .normal)
+            favoriteButton.tintColor = .systemPink
+            
+            print("LETS MAKE BIG HEART")
+        }
     }
     
     
     @objc private func didTapFavoriteButton(_ sender: UIButton) {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold, scale: .large)
-        let heartImage = UIImage(systemName: "heart", withConfiguration: largeConfig)
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold, scale: .large)
         let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
         
-        
-
         switch isFavorite {
-
+            
         case false:
             favoriteButton.setImage(filledHeartImage, for: .normal)
             favoriteButton.tintColor = .systemPink
@@ -189,21 +202,61 @@ class FeedCollectionViewCell: UICollectionViewCell {
             homeVC?.handleArticlePersisting(cell: self, toBePersisted: true)
             print("favorite")
             
+            
+            
         case true:
-            favoriteButton.setImage(heartImage, for: .normal)
-            favoriteButton.tintColor = .systemYellow
-            isFavorite = false
+            
+            print("limboooooo land !!!")
             homeVC?.handleArticlePersisting(cell: self, toBePersisted: false)
-            print("unfavorite")
+//            favoriteButton.setImage(heartImage, for: .normal)
+//            favoriteButton.tintColor = .systemYellow
+//            isFavorite = false
+//            print("unfavorite")
+            break
         }
     }
     
-
+    /// Here we check if the article is in favorites or not, and to be called while dequing the cell in the cellForItem method
+    /// - Parameter article: The current article this cell holds
+    func checkIfCurentArticleIsFavouriteWith(article:Article){
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold, scale: .large)
+        switch DataPersistenceManager.shared.checkIfArticleIsStoredWith(article.id) {
+           
+        case true:
+            print("There are favorites")
+            isFavorite = true
+            let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+            favoriteButton.setImage(filledHeartImage, for: .normal)
+            favoriteButton.tintColor = .systemPink
+            
+        case false:
+            print("No favorites")
+            isFavorite = false
+            let heartImage = UIImage(systemName: "heart", withConfiguration: largeConfig)
+            favoriteButton.setImage(heartImage, for: .normal)
+            favoriteButton.tintColor = .systemPink
+        }
+    }
+    
+    
+    /// This method is responsible for aplying a fade in animation for the articles images
+    /// - Parameters:
+    ///   - source: The view to be animated
+    ///   - duration: the duration of the animation
     private func animateImageToFadeIn(source: UIView?, duration: TimeInterval){
         guard source != nil else {return}
          UIView.animate(withDuration: duration) { [weak self] in
              self?.articleImage.alpha = 1
          }
      }
+    
+    
+    /// change the isFavorite value when the article is deleted from favorites VC
+    private func listenToDeleteButtonUpdates(){
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.deleteArticleButtontapped, object: nil, queue: nil) { notificaiton in
+            print("Deletion notification received")
+            self.isFavorite = false
+        }
+    }
 }
 
