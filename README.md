@@ -20,7 +20,7 @@ Simple iOS application in Swift for browsing the latest space news and articles
 
 * Used architecture is MVC
 
-* UI has been built programatically uning UIKit
+* UI has been built programatically
 
 * Networking has been done using Singelton class `NetworkManager`
 
