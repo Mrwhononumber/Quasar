@@ -41,7 +41,10 @@ Simple iOS application in Swift for browsing the latest space news and articles
  
  <img src=https://github.com/Mrwhononumber/Images/blob/867d028c7a12f4c3bbe31bf4787b906bb43276b5/Quasar/TestFlight_Icon.png width="100">
  
- [![Basem]( <img src=https://github.com/Mrwhononumber/Images/blob/867d028c7a12f4c3bbe31bf4787b906bb43276b5/Quasar/TestFlight_Icon.png width="100">)](https://google.com)
+ [![Basem]( https://github.com/Mrwhononumber/Images/blob/867d028c7a12f4c3bbe31bf4787b906bb43276b5/Quasar/TestFlight_Icon.png)](https://google.com)
+ 
+ [<img alt="alt_text" width="100px" src="https://github.com/Mrwhononumber/Images/blob/867d028c7a12f4c3bbe31bf4787b906bb43276b5/Quasar/TestFlight_Icon.png" />](https://www.google.com/)
+
  
 
 
