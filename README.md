@@ -1,8 +1,7 @@
 # Quasar - Your personal space news App! 🚀 
 Simple iOS application in Swift for browsing the latest space news and articles
 
-<img src=https://github.com/Mrwhononumber/Images/blob/522d0cba2bcad6f4c262ba0ae51f3e22f656c09a/Quasar/Quasar_Gituhub_Screenshot1.jpg width="155"> <img src=https://github.com/Mrwhononumber/Images/blob/522d0cba2bcad6f4c262ba0ae51f3e22f656c09a/Quasar/Quasar_Gituhub_Screenshot3.jpg width="155"> 
-<img src=https://github.com/Mrwhononumber/Images/blob/522d0cba2bcad6f4c262ba0ae51f3e22f656c09a/Quasar/Quasar_Gituhub_Screenshot2.jpg width="155">
+<img src=https://github.com/Mrwhononumber/Images/blob/522d0cba2bcad6f4c262ba0ae51f3e22f656c09a/Quasar/Quasar_Gituhub_Screenshot1.jpg width="155"> <img src=https://github.com/Mrwhononumber/Images/blob/522d0cba2bcad6f4c262ba0ae51f3e22f656c09a/Quasar/Quasar_Gituhub_Screenshot3.jpg width="155"> <img src=https://github.com/Mrwhononumber/Images/blob/522d0cba2bcad6f4c262ba0ae51f3e22f656c09a/Quasar/Quasar_Gituhub_Screenshot2.jpg width="155">
 
 
 # Application Features
