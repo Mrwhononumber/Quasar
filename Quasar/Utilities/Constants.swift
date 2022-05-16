@@ -9,8 +9,9 @@ import Foundation
 
 struct Constants {
     
-    static let APIEndPoint              = "https://api.spaceflightnewsapi.net/v3/articles?_limit=10&_start="
-    static let apperanceUserDefaultsKey = "apperanceUserDefaultsKey"
-    static let AppStoreRatingURLString  = "https://apps.apple.com/ae/app/youtube-watch-listen-stream/id544007664"
-    static let appTestFlightURLString = "https://testflight.apple.com/join/PFSRCjzG"
+    static let APIEndPoint                    = "https://api.spaceflightnewsapi.net/v3/articles?_limit=10&_start="
+    static let apperanceUserDefaultsKey       = "apperanceUserDefaultsKey"
+    static let QuasarAppStoreURLString  = "https://apps.apple.com/ae/app/youtube-watch-listen-stream/id1617077454"
+    
+    
 }
