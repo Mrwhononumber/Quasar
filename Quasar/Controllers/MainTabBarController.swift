@@ -13,7 +13,7 @@ class MainTabBarController: UITabBarController {
     
     private let vc1 = UINavigationController(rootViewController: HomeViewController())
     private let vc2 = UINavigationController(rootViewController: FavoritesViewController())
-
+    
     //MARK: - Init
     
     override func viewDidLoad() {

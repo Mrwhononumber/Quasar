@@ -171,7 +171,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
     }
     
     private func promptRating(){
-        guard let appStoreURL = URL(string: Constants.AppStoreRatingURLString) else {
+        guard let appStoreURL = URL(string: Constants.QuasarAppStoreURLString) else {
             print ("Error with the App store link")
             return
         }
@@ -179,7 +179,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
     }
     
     private func launchAppSharingSheet(){
-       guard let appURL = NSURL(string: Constants.AppStoreRatingURLString) else {
+       guard let appURL = NSURL(string: Constants.QuasarAppStoreURLString) else {
             print ("Error with the App store link")
             return
         }
@@ -325,7 +325,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate, MF
         let divider = "---------------------------"
         let message = "\n\n\n\n\(topDivider)\nApp Version: \(currentVersion ?? "-")\nDevice model: \(deviceModel)\niOS version: \(iOSVersion)\n\(divider)"
         composer.mailComposeDelegate = self
-        composer.setToRecipients(["Basem@quasarApp.com"])
+        composer.setToRecipients(["mrwhononumberx@gmail.com"])
         composer.setSubject("Hello Quasar!")
         composer.setMessageBody(message, isHTML: false)
 
