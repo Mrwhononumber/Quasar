@@ -28,6 +28,7 @@
 		66B9609227D32F210035890E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66B9609127D32F210035890E /* Assets.xcassets */; };
 		66B9609527D32F210035890E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B9609327D32F210035890E /* LaunchScreen.storyboard */; };
 		66C535432802149800351DF3 /* EmptyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C535422802149800351DF3 /* EmptyBackgroundView.swift */; };
+		8B535D282DB8EDD900EC298E /* ArticleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B535D272DB8EDD400EC298E /* ArticleResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		66B9609427D32F210035890E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66B9609627D32F210035890E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66C535422802149800351DF3 /* EmptyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBackgroundView.swift; sourceTree = "<group>"; };
+		8B535D272DB8EDD400EC298E /* ArticleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		664029CF27D33793009BF0B1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8B535D272DB8EDD400EC298E /* ArticleResponse.swift */,
 				664029DA27D36B76009BF0B1 /* Article.swift */,
 			);
 			path = Models;
@@ -230,6 +233,7 @@
 				664029DD27D3946F009BF0B1 /* Extensions.swift in Sources */,
 				664029D327D33F24009BF0B1 /* FeedCollectionViewCell.swift in Sources */,
 				664029D927D36A6F009BF0B1 /* QuasarError.swift in Sources */,
+				8B535D282DB8EDD900EC298E /* ArticleResponse.swift in Sources */,
 				664029DF27D49991009BF0B1 /* ArticleDetailViewController.swift in Sources */,
 				66C535432802149800351DF3 /* EmptyBackgroundView.swift in Sources */,
 				664029D527D3692D009BF0B1 /* NetworkManager.swift in Sources */,
@@ -388,7 +392,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W9X6CS5GN5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Quasar/Info.plist;
@@ -400,7 +404,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.basemelkady.Quasar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -415,7 +419,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W9X6CS5GN5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Quasar/Info.plist;
@@ -427,7 +431,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.basemelkady.Quasar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

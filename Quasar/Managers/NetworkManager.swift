@@ -14,7 +14,7 @@ class NetworkManager {
 
     private var cache = NSCache <NSString, UIImage>()
     
-    func fetchArticleData (with url: String, completion: @ escaping (Result<[Article], QuasarError>) -> Void) {
+    func fetchArticleData (with url: String, completion: @escaping (Result<[Article], QuasarError>) -> Void) {
         
         guard let url = URL(string: url) else {
             DispatchQueue.main.async {
@@ -42,8 +42,8 @@ class NetworkManager {
                 return
             }
             do {
-                let fetchedArticles = try JSONDecoder().decode([Article].self, from: data)
-                completion(.success(fetchedArticles))
+                let fetchedArticles = try JSONDecoder().decode(ArticleResponse.self, from: data)
+                completion(.success(fetchedArticles.results))
             } catch {
                 DispatchQueue.main.async {
                     completion(.failure(.invalidData))

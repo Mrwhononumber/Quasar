@@ -107,10 +107,10 @@ extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewD
         detailVC.currentArticle = Article(id: Int(selectedArticle.id),
                                           title: selectedArticle.title ?? "",
                                           url: selectedArticle.url ?? "",
-                                          imageUrl: selectedArticle.imageUrl ?? "",
-                                          newsSite: selectedArticle.newsSite ?? "",
+                                          image_url: selectedArticle.imageUrl ?? "",
+                                          news_site: selectedArticle.newsSite ?? "",
                                           summary: selectedArticle.summary ?? "",
-                                          publishedAt: selectedArticle.publishedAt ?? "")
+                                          published_at: selectedArticle.publishedAt ?? "")
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
