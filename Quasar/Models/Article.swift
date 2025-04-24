@@ -15,8 +15,8 @@ struct Article: Decodable {
     let id: Int
     let title: String
     let url: String
-    let imageUrl: String
-    let newsSite: String
+    let image_url: String
+    let news_site: String
     let summary: String
-    let publishedAt: String
+    let published_at: String
 }

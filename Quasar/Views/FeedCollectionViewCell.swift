@@ -130,8 +130,8 @@ class FeedCollectionViewCell: UICollectionViewCell {
     func configureCell(with article:Article){
         
         articleTitle.text = article.title
-        articleSource.text = article.newsSite
-        NetworkManager.shared.fetchArticleImageWith(url: article.imageUrl) { [weak self] results in
+        articleSource.text = article.news_site
+        NetworkManager.shared.fetchArticleImageWith(url: article.image_url) { [weak self] results in
             switch results {
             case .success(let fetchedImage):
                 self?.articleImage.alpha = 0

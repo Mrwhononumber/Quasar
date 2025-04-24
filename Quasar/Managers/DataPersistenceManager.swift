@@ -25,11 +25,11 @@ class DataPersistenceManager {
         let context = appDelegate.persistentContainer.viewContext
         let storedArticle = StoredArticle(context: context)
         
-        storedArticle.imageUrl    = article.imageUrl
+        storedArticle.imageUrl    = article.image_url
         storedArticle.title       = article.title
         storedArticle.id          = Int64 (article.id)
-        storedArticle.newsSite    = article.newsSite
-        storedArticle.publishedAt = article.publishedAt
+        storedArticle.newsSite    = article.news_site
+        storedArticle.publishedAt = article.published_at
         storedArticle.summary     = article.summary
         storedArticle.url         = article.url
         
