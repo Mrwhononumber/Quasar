@@ -36,9 +36,9 @@ Simple iOS application in Swift for browsing the latest space news and articles
  
  ⌛  Browse the upcoming lanuches and events
  
- # TestFlight
+ # App Store
   
- [<img alt="alt_text" width="50px" src="https://github.com/Mrwhononumber/Images/blob/867d028c7a12f4c3bbe31bf4787b906bb43276b5/Quasar/TestFlight_Icon.png" />](https://testflight.apple.com/join/PFSRCjzG)
+ [<img alt="alt_text" width="50px" src="https://github.com/Mrwhononumber/Images/blob/20460e619a303d3235313d174baaade4f225e3b9/Quasar/appStore_Icon.png" />](https://apps.apple.com/al/app/quasar-feed/id1617077454)
 
  
 
